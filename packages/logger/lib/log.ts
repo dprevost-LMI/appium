@@ -277,10 +277,10 @@ export class Log extends EventEmitter implements Logger {
    * @throws {Error} If the given file cannot be loaded
    * @returns {Promise<PreprocessingRulesLoadResult>}
    */
-  async loadSecureValuesPreprocessingRules(
+  loadSecureValuesPreprocessingRules(
     rulesJsonPath: string | string[] | LogFiltersConfig
-  ): Promise<PreprocessingRulesLoadResult> {
-    const issues = await this._secureValuesPreprocessor.loadRules(rulesJsonPath);
+  ): PreprocessingRulesLoadResult {
+    const issues = this._secureValuesPreprocessor.loadRules(rulesJsonPath);
     return {
       issues,
       rules: _.cloneDeep(this._secureValuesPreprocessor.rules),

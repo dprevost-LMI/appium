@@ -95,7 +95,7 @@ export class SecureValuesPreprocessor {
   }
 
   /**
-   * Loads rules from the given JSON file
+   * Loads rules from the string or the config
    *
    * @param {string|string[]|LogFiltersConfig} filters
    * One or more log parsing rules
@@ -104,7 +104,7 @@ export class SecureValuesPreprocessor {
    * @returns {Promise<string[]>} The list of issues found while parsing each rule.
    * An empty list is returned if no rule parsing issues were found
    */
-  async loadRules(filters: string | string[] | LogFiltersConfig): Promise<string[]> {
+  loadRules(filters: string | string[] | LogFiltersConfig): string[] {
     const issues: string[] = [];
     const rawRules: (LogFilter | string)[] = [];
     for (const source of (_.isArray(filters) ? filters : [filters])) {
@@ -135,7 +135,7 @@ export class SecureValuesPreprocessor {
     if (!this._rules.find((r) => areRegexEqual(r.pattern, newRule.pattern))) {
         this._rules.push(newRule);
     }
-    }
+  }
 
   /**
    * Performs secure values replacement inside the given string
@@ -156,4 +156,15 @@ export class SecureValuesPreprocessor {
     }
     return result;
   }
+}
+
+/**
+ * Checks if two regular expressions are equal
+ *
+ * @param {RegExp} regex1 The first regular expression
+ * @param {RegExp} regex2 The second regular expression
+ * @returns {boolean} True if the regular expressions are equal, false otherwise
+ */
+function areRegexEqual(regex1: RegExp, regex2: RegExp): boolean {
+  return regex1.source === regex2.source && regex1.flags === regex2.flags;
 }

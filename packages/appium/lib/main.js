@@ -254,7 +254,7 @@ async function init(args) {
     await logsinkInit(serverArgs);
 
     if (serverArgs.logFilters) {
-      const {issues, rules} = await logger.unwrap().loadSecureValuesPreprocessingRules(
+      const {issues, rules} = logger.unwrap().loadSecureValuesPreprocessingRules(
         serverArgs.logFilters,
       );
       const argToLog = _.truncate(JSON.stringify(serverArgs.logFilters), {

@@ -36,8 +36,9 @@ export interface Logger extends EventEmitter {
   silent(prefix: string, message: any, ...args: any[]): void;
 
   loadSecureValuesPreprocessingRules(
+    // TODO dprevost no code is reading a file so passing a file path make no sense! Where is the file read?
     rulesJsonPath: string | string[] | LogFiltersConfig
-  ): Promise<PreprocessingRulesLoadResult>;
+  ): PreprocessingRulesLoadResult;
 
   enableColor(): void;
   disableColor(): void;
