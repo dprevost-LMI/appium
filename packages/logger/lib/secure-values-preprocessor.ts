@@ -128,6 +128,16 @@ export class SecureValuesPreprocessor {
   }
 
   /**
+   * Add a single rule, so that we can register new rules during runtime
+   */
+  addRule(rule: string | LogFilter) {
+    const newRule = this.parseRule(rule);
+    if (!this._rules.find((r) => areRegexEqual(r.pattern, newRule.pattern))) {
+        this._rules.push(newRule);
+    }
+    }
+
+  /**
    * Performs secure values replacement inside the given string
    * according to the previously loaded rules. No replacement is made
    * if there are no rules or the given value is not a string
