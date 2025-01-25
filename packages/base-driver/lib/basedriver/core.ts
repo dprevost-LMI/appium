@@ -131,7 +131,13 @@ export class DriverCore<const C extends Constraints, Settings extends StringReco
     this._eventHistory = {commands: []};
     this.shutdownUnexpectedly = false;
     this.commandsQueueGuard = new AsyncLock();
-    this.settings = new DeviceSettings();
+    this.settings = new DeviceSettings({} as Settings, this.onSettingsUpdate.bind(this));
+  }
+
+  async onSettingsUpdate(key, value) {
+    if (key === 'newMaskingRule') {
+      this._log.addMaskingRule(value);
+    }
   }
 
   /**

@@ -11,7 +11,8 @@ import type {
   Logger,
   LogLevel,
   PreprocessingRulesLoadResult,
-  LogFiltersConfig
+  LogFiltersConfig,
+  LogFilter
 } from './types';
 import type {Writable} from 'node:stream';
 import {AsyncLocalStorage} from 'node:async_hooks';
@@ -285,6 +286,10 @@ export class Log extends EventEmitter implements Logger {
       issues,
       rules: _.cloneDeep(this._secureValuesPreprocessor.rules),
     };
+  }
+
+  addMaskingRule(rule: string | LogFilter): void {
+    this._secureValuesPreprocessor.addRule(rule);
   }
 
   private emitLog(m: MessageObject): void {

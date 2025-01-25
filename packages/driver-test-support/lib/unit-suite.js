@@ -581,6 +581,10 @@ export function driverUnitTestSuite(
       d = new DriverClass();
     });
 
+    it('should be able to add a new masking rule', function () {
+      d.log.addMaskingRule('foo');
+    });
+
     it('should handled with wild card if feature name is invalid', function () {
       d.allowInsecure = ['foo'];
       d.isFeatureEnabled('foo').should.be.true;

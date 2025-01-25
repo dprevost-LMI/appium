@@ -5,6 +5,7 @@ import B from 'bluebird';
 import {TEST_HOST, getTestPort, createAppiumURL} from './helpers';
 import sinon from 'sinon';
 import {Agent} from 'node:http';
+import { logger } from '@appium/support';
 
 /**
  * Creates some helper functions for E2E tests to manage sessions.
@@ -346,6 +347,20 @@ export function driverE2ETestSuite(DriverClass, defaultCaps = {}) {
         await endSession(newSession.sessionId);
         // @ts-expect-error
         should.not.exist(d.noCommandTimer);
+      });
+    });
+
+    describe('update settings with command', function () {
+      it('should add new masking rule', async function () {
+        let newSession = await startSession({capabilities: {alwaysMatch: defaultCaps }});
+        await postCommand(/** @type {string} */ (d.sessionId), 'appium/settings', { settings: { newMaskingRule: 'foo' }});
+        await endSession(newSession.sessionId);
+
+        // eslint-disable-next-line dot-notation
+        expect(logger.default.unwrap()['_secureValuesPreprocessor']['_rules']).to.be.deep.equal([{
+          pattern: /\bfoo\b/g,
+          replacer: '**SECURE**',
+        }]);
       });
     });
 

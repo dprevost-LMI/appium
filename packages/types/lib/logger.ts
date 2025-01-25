@@ -1,4 +1,4 @@
-import type {Logger} from '@appium/logger';
+import type {Logger, LogFilter} from '@appium/logger';
 
 /**
  * A log prefix for {@linkcode AppiumLogger}
@@ -69,4 +69,6 @@ export interface AppiumLogger {
    * @param {boolean} [replace=false] if true, replace the existing context info object(default: false)
    */
   updateAsyncContext(contextInfo: AppiumLoggerContext, replace?: boolean): void;
+
+  addMaskingRule(rule: string | LogFilter): void;
 }

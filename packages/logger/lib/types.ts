@@ -40,6 +40,8 @@ export interface Logger extends EventEmitter {
     rulesJsonPath: string | string[] | LogFiltersConfig
   ): PreprocessingRulesLoadResult;
 
+  addMaskingRule(rule: string | LogFilter): void;
+
   enableColor(): void;
   disableColor(): void;
 
