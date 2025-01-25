@@ -288,8 +288,8 @@ export class Log extends EventEmitter implements Logger {
     };
   }
 
-  addMaskingRule(rule: string | LogFilter): void {
-    this._secureValuesPreprocessor.addRule(rule);
+  addMaskingRules(rules: (string | LogFilter)[]): void {
+    this._secureValuesPreprocessor.addRules(rules);
   }
 
   private emitLog(m: MessageObject): void {

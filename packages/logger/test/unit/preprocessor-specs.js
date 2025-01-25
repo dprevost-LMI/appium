@@ -107,4 +107,13 @@ describe('Log Internals', function () {
     preprocessor.rules.length.should.eql(1);
   });
 
+  it('should add new rules', function () {
+    const aRule = {pattern: '^:'};
+    const anotherRule = ':';
+
+    preprocessor.addRules([aRule, anotherRule]);
+
+    preprocessor.rules.length.should.eql(2);
+  });
+
 });

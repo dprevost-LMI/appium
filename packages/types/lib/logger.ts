@@ -70,5 +70,5 @@ export interface AppiumLogger {
    */
   updateAsyncContext(contextInfo: AppiumLoggerContext, replace?: boolean): void;
 
-  addMaskingRule(rule: string | LogFilter): void;
+  addMaskingRules(rules: (string | LogFilter)[]): void;
 }

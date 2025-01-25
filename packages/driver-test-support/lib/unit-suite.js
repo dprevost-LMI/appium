@@ -582,7 +582,7 @@ export function driverUnitTestSuite(
     });
 
     it('should be able to add a new masking rule', function () {
-      d.log.addMaskingRule('foo');
+      d.log.addMaskingRules(['foo1', 'foo2']);
     });
 
     it('should handled with wild card if feature name is invalid', function () {

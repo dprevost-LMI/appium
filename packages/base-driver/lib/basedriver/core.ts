@@ -136,7 +136,7 @@ export class DriverCore<const C extends Constraints, Settings extends StringReco
 
   async onSettingsUpdate(key, value) {
     if (key === 'newMaskingRule') {
-      this._log.addMaskingRule(value);
+      this._log.addMaskingRules(value);
     }
   }
 

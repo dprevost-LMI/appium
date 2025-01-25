@@ -50,10 +50,10 @@ export function getLogger(prefix = null) {
       // Older Appium dependencies may not have 'updateAsyncStorage'
       this.unwrap().updateAsyncStorage?.(contextInfo, replace);
     },
-    addMaskingRule(
-      /** @type {string | import('@appium/logger').LogFilter} */
-      rule) {
-      this.unwrap().addMaskingRule(rule);
+    addMaskingRules(
+      /** @type {(string | import('@appium/logger').LogFilter)[]} */
+      rules) {
+      this.unwrap().addMaskingRules(rules);
     }
   };
   // allow access to the level of the underlying logger

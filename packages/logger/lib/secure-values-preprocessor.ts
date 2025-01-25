@@ -138,6 +138,15 @@ export class SecureValuesPreprocessor {
   }
 
   /**
+   * Add multiple rules at runtime
+   */
+  addRules(rules: (string | LogFilter)[]) {
+    for (const rule of rules) {
+      this.addRule(rule);
+    }
+  }
+
+  /**
    * Performs secure values replacement inside the given string
    * according to the previously loaded rules. No replacement is made
    * if there are no rules or the given value is not a string

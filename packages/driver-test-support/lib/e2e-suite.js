@@ -353,7 +353,7 @@ export function driverE2ETestSuite(DriverClass, defaultCaps = {}) {
     describe('update settings with command', function () {
       it('should add new masking rule', async function () {
         let newSession = await startSession({capabilities: {alwaysMatch: defaultCaps }});
-        await postCommand(/** @type {string} */ (d.sessionId), 'appium/settings', { settings: { newMaskingRule: 'foo' }});
+        await postCommand(/** @type {string} */ (d.sessionId), 'appium/settings', { settings: { newMaskingRule: ['foo', 'foo'] }});
         await endSession(newSession.sessionId);
 
         // eslint-disable-next-line dot-notation
