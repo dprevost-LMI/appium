@@ -131,14 +131,27 @@ export class DriverCore<const C extends Constraints, Settings extends StringReco
     this._eventHistory = {commands: []};
     this.shutdownUnexpectedly = false;
     this.commandsQueueGuard = new AsyncLock();
-    this.settings = new DeviceSettings({} as Settings, this.onSettingsUpdate.bind(this));
+    this.settings = this.registerDeviceSettings();
   }
 
-  async onSettingsUpdate(key, value) {
-    if (key === 'newMaskingRules') {
-      this._log.addMaskingRules(value);
-    }
-  }
+  registerDeviceSettings(settings?: Settings, settingsUpdateHandler?: (key: string, value: string, oldValue: string) => void) {
+
+    const onSettingsUpdate = (key, value) => {
+      if (key === 'newMaskingRules') {
+        this._log.info('Adding new masking rules');
+        this._log.addMaskingRules(value);
+        // eslint-disable-next-line dot-notation
+        this._log.info(this._log.unwrap()['_secureValuesPreprocessor']['_rules']);
+      }
+      if (settings) {
+        settingsUpdateHandler?.(key, value, settings[key]);
+      }
+    };
+
+    // TODO dprevost review why we need to cast settings to unknown
+    return new DeviceSettings({ newMaskingRules: [], ...settings } as unknown as Settings, onSettingsUpdate.bind(this));}
+
+
 
   /**
    * Set a callback handler if needed to execute a custom piece of code
